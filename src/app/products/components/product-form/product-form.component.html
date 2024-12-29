@@ -1,1 +1,25 @@
-<p>product-form works!</p>
+<div>
+  <h2>{{ productId ? 'Editar Producto' : 'Crear Producto' }}</h2>
+  <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+    <div>
+      <label for="name">Nombre:</label>
+      <input id="name" formControlName="name" type="text" />
+      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+        <small>El nombre es obligatorio y debe tener al menos 3 caracteres.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="price">Precio:</label>
+      <input id="price" formControlName="price" type="number" />
+      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+        <small>El precio es obligatorio y debe ser un valor positivo.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="productForm.invalid">
+      {{ productId ? 'Actualizar' : 'Crear' }}
+    </button>
+    <button type="button" (click)="goToProducts()">Cancelar</button>
+  </form>
+</div>
