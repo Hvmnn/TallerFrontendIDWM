@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit{
   errorMessages: string[] = [];
 
   constructor(private FormBuilder: FormBuilder, private router: Router, private loginService: LoginService){}
-   
+
   ngOnInit(): void {
     this.loginForm = this.FormBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -36,10 +36,10 @@ export class LoginComponent implements OnInit{
       const data = await this.loginService.login(this.loginForm);
       if(data && data.token){
         if(data.user.role.type === "Admin"){
-          this.router.navigate(['/productoAdmin'])
+          this.router.navigate(['/products/new'])
         }
         else if(data.user.role.type === "Usuario"){
-          this.router.navigate(['/productoUser'])
+          this.router.navigate(['/products'])
         }
         else{
           this.errorMessages.push('Error al inicias sesión');
