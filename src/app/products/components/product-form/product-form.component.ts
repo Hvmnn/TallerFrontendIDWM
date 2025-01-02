@@ -51,24 +51,42 @@ export class ProductFormComponent implements OnInit{
       return;
     }
 
+    const formData = new FormData();
     const productData = this.productForm.value;
 
+    if (productData.image) {
+      formData.append('file', productData.image);
+      formData.append('upload_preset', 'your_upload_preset'); // Cambia a tu configuración de Cloudinary
+
+      // Subir imagen a Cloudinary
+      this.productsService.uploadImage(formData).subscribe({
+        next: (response) => {
+          productData.imageUrl = response.secure_url; // Obtener la URL de la imagen
+          this.submitProduct(productData); // Crear o actualizar el producto
+        },
+        error: (error) => console.error('Error al subir imagen:', error),
+      });
+    } else {
+      this.submitProduct(productData); // Crear o actualizar sin imagen
+    }
+  }
+
+  private submitProduct(productData: any): void {
     if (this.productId) {
       this.productsService.updateProduct(this.productId, productData).subscribe({
         next: () => {
-          console.log('Producto actualizado:');
+          console.log('Producto actualizado');
           this.router.navigate(['/products']);
         },
-        error: (error) => console.error('Error al actualizar el producto:', error),
+        error: (error) => console.error('Error al actualizar producto:', error),
       });
-    }
-    else {
+    } else {
       this.productsService.createProduct(productData).subscribe({
         next: () => {
-          console.log('Producto creado:');
+          console.log('Producto creado');
           this.router.navigate(['/products']);
         },
-        error: (error) => console.error('Error al crear el producto:', error),
+        error: (error) => console.error('Error al crear producto:', error),
       });
     }
   }

@@ -30,4 +30,10 @@ export class ProductsService {
   deleteProduct(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
+
+  uploadImage(formData: FormData): Observable<any> {
+    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload';
+    return this.http.post<any>(cloudinaryUrl, formData);
+  }
+
 }
