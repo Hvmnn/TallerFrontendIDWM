@@ -4,22 +4,53 @@
     <div>
       <label for="name">Nombre:</label>
       <input id="name" formControlName="name" type="text" />
-      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
-        <small>El nombre es obligatorio y debe tener al menos 3 caracteres.</small>
-      </div>
+      <small *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+        El nombre debe tener entre 10 y 64 caracteres.
+      </small>
+    </div>
+
+    <div>
+      <label for="type">Tipo:</label>
+      <select id="type" formControlName="type">
+        <option *ngFor="let type of allowedTypes" [value]="type">{{ type }}</option>
+      </select>
+      <small *ngIf="productForm.get('type')?.invalid && productForm.get('type')?.touched">
+        Selecciona un tipo válido.
+      </small>
     </div>
 
     <div>
       <label for="price">Precio:</label>
       <input id="price" formControlName="price" type="number" />
-      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
-        <small>El precio es obligatorio y debe ser un valor positivo.</small>
-      </div>
+      <small *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+        El precio debe estar entre 0 y 100000000.
+      </small>
     </div>
 
-    <button type="submit" [disabled]="productForm.invalid">
-      {{ productId ? 'Actualizar' : 'Crear' }}
-    </button>
-    <button type="button" (click)="goToProducts()">Cancelar</button>
+    <div>
+      <label for="stock">Stock:</label>
+      <input id="stock" formControlName="stock" type="number" />
+      <small *ngIf="productForm.get('stock')?.invalid && productForm.get('stock')?.touched">
+        El stock debe estar entre 0 y 100000.
+      </small>
+    </div>
+
+    <div>
+      <label for="image">Imagen:</label>
+      <input id="image" type="file" (change)="validateFile($event)" />
+      <small *ngIf="imageError">{{ imageError }}</small>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="productForm.invalid || isLoading">
+        {{ productId ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" (click)="goToProducts()">Cancelar</button>
+      <button type="button" (click)="productForm.reset()">Reset</button>
+    </div>
+
+    <div *ngIf="isLoading">
+      <p>Cargando...</p>
+    </div>
   </form>
 </div>

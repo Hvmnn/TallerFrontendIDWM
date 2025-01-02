@@ -1,6 +1,11 @@
 <div>
   <h1>Gestión de Productos</h1>
 
+  <!-- Botón para crear un nuevo producto, solo visible para administradores -->
+  <button *ngIf="isAdmin()" (click)="createProduct()">
+    Crear Producto Nuevo
+  </button>
+
   <div *ngIf="products.length === 0">
     <p>No hay productos disponibles.</p>
   </div>

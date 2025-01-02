@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit{
       const data = await this.loginService.login(this.loginForm);
       if(data && data.token){
         if(data.user.role.type === "Admin"){
-          this.router.navigate(['/products/new'])
+          this.router.navigate(['/products'])
         }
         else if(data.user.role.type === "Usuario"){
           this.router.navigate(['/products'])

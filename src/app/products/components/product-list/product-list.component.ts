@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../auth/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -12,7 +13,7 @@ import { AuthService } from '../../../auth/service/auth.service';
 export class ProductListComponent implements OnInit {
   products: any[] = [];
 
-  constructor(private productsService: ProductsService, private authService: AuthService) {}
+  constructor(private productsService: ProductsService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -31,8 +32,13 @@ export class ProductListComponent implements OnInit {
   }
 
   editProduct(productId: number): void {
-    console.log('Editar producto:', productId);
+    this.router.navigate(['/products/', productId]);
   }
+
+  createProduct(): void {
+    this.router.navigate(['/products/new']);
+  }
+
 
   deleteProduct(productId: number): void {
     if (confirm('¿Estás seguro de eliminar el producto?')) {
