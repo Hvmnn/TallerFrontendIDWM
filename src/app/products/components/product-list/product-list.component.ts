@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../auth/service/auth.service';
 
 @Component({
   selector: 'app-product-list',
@@ -11,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class ProductListComponent implements OnInit {
   products: any[] = [];
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -45,5 +46,9 @@ export class ProductListComponent implements OnInit {
         },
       });
     }
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 }

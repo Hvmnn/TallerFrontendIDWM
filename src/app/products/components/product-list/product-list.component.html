@@ -1,20 +1,35 @@
 <div>
-  <h2>Lista de Productos</h2>
-  <table>
+  <h1>Gestión de Productos</h1>
+
+  <div *ngIf="products.length === 0">
+    <p>No hay productos disponibles.</p>
+  </div>
+
+  <table *ngIf="products.length > 0">
     <thead>
       <tr>
+        <th>ID</th>
         <th>Nombre</th>
+        <th>Tipo</th>
         <th>Precio</th>
+        <th>Stock</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
         <td>{{ product.name }}</td>
+        <td>{{ product.type }}</td>
         <td>{{ product.price | currency }}</td>
+        <td>{{ product.stock }}</td>
         <td>
-          <button (click)="editProduct(product.id)">Editar</button>
-          <button (click)="deleteProduct(product.id)">Eliminar</button>
+          <button *ngIf="isAdmin()" (click)="editProduct(product.id)">
+            Editar
+          </button>
+          <button *ngIf="isAdmin()" (click)="deleteProduct(product.id)">
+            Eliminar
+          </button>
         </td>
       </tr>
     </tbody>
