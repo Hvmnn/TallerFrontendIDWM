@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { routes } from '../../../app.routes';
 import { LoginService } from '../../service/login.service';
 import { rutValidator } from './rutValidator';
-import { Gender } from '../../interface/login';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -16,7 +15,7 @@ export class RegisterComponent {
   registerForm!: FormGroup;
   submitted: boolean = false;
   errorMessages: string[] = [];
-  registrationSucces: boolean = false;
+  registrationSuccess: boolean = false;
   registrationError: string | null = null;
 
    constructor(
@@ -27,8 +26,8 @@ export class RegisterComponent {
 
    ngOnInit(): void{
     this.registerForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
       rut: ['', [Validators.required], rutValidator()],
+      name: ['', [Validators.required]],
       birthday: [
         '',
         [
@@ -59,5 +58,28 @@ export class RegisterComponent {
       this.errorMessages.push('Las contraseñas no son iguales.');
       return;
     }
+
+    try {
+      const data = await this.loginService.register(this.registerForm);
+      if (data && data.token) {
+        this.registrationSuccess = true;
+        setTimeout(() => {
+          this.router.navigate(['']);
+        }, 4000);
+      } else {
+        this.registrationError = data.message;
+      }
+    } catch (err: any) {
+      this.errorMessages.push('Ha ocurrido un error al crear la cuenta');
+    }
+  }
+
+  closeSuccessMessage(): void {
+    this.registrationSuccess = false;
+    this.router.navigate(['']);
+  }
+
+  closeErrorMessage(): void {
+    this.registrationError = null;
   }
 }
