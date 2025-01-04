@@ -1,0 +1,145 @@
+<div class="container">
+    <div class="register">
+      <h2>Registrarse</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <label for="name">Nombre</label>
+        <input
+            type="name"
+            id="name"
+            formControlName="name"
+            class="form-control"
+        />
+
+        <div
+            *ngIf="submitted && registerForm.controls['name'].errors?.['required']"
+            class="error-message"
+        >
+            El nombre es requerido.
+        </div>
+
+        <label for="rut">Rut</label>
+        <input
+          type="rut"
+          id="rut"
+          formControlName="rut"
+          class="form-control"
+          placeholder="xx.xx.xx-x"
+        />
+
+        <div
+          *ngIf="submitted && registerForm.controls['rut'].errors?.['required']"
+          class="error-message"
+        >
+          El RUT es requerido.
+        </div>
+
+        <label for="birthday">Fecha de nacimiento</label>
+        <input
+          type="birthday"
+          id="birthday"
+          formControlName="birthday"
+          class="form-control"
+        />
+        <div
+          *ngIf="submitted && registerForm.controls['birthday'].errors?.['required']"
+          class="error-message"
+        >
+          La fecha de nacimiento es requerida.
+        </div>
+
+        <div
+        *ngIf="submitted && registerForm.controls['birthday'].errors?.['birthday']"
+        class="error-message"
+        >
+            Por favor, introduce una fecha de nacimiento válida.
+        </div>
+
+        <label for="email">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+        />
+
+        <div
+          *ngIf="submitted && registerForm.controls['email'].errors?.['required']"
+          class="error-message"
+        >
+          El correo electrónico es requerido.
+        </div>
+        <div
+          *ngIf="submitted && registerForm.controls['email'].errors?.['email']"
+          class="error-message"
+        >
+          Por favor, introduce un correo electrónico válida.
+        </div>
+
+        <label for="gender">Género</label>
+        <select
+            type="gender"
+            id="gender"
+            formControlName="GenderId"
+            class="form-control"
+        >
+            <option value="" disabled selected>Selecciona tu género</option>
+            <option value="1">Masculino</option>
+            <option value="2">Femenino</option>
+            <option value="3">Prefiero no decirlo</option>
+            <option value="4">Otro</option>
+            <div
+                *ngIf="submitted && f['gender'].errors?['required']"
+                class="error-message"
+            >
+                El género es requerido.
+            </div>
+        </select>
+        
+        <label for="password">Contraseña</label>
+        <input 
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+        >
+
+        <div
+            *ngIf="submitted && registerForm.controls['password'].errors?.['required']"
+            class="error-message"    
+        >
+            La contraseña es requerida.
+        </div>
+
+        <label for="password">Confirmar contraseña</label>
+        <input 
+            type="password"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            class="form-control"
+        >
+
+        <div
+            *ngIf="submitted && registerForm.controls['password'].errors?.['required']"
+            class="error-message"    
+        >
+            La contraseña es requerida.
+        </div>
+
+        <button type="submit">Registrarse</button>
+        <p>¿Tienes una cuenta? <a href="">¡Ingresa!</a></p>
+      </form>
+
+      <div *ngIf="registrationSuccess" class="success-message">
+        <p>¡Te has registrado existosamente!</p>
+        <button class="btnSucces" (click)="closeSuccessMessage()">Ok</button>
+      </div>
+
+      <div *ngIf="registrationError" class="error-register">
+        <p>{{registrationError}}</p>
+        <button class="btn-danger" (click)="closeErrorMessage()">
+            Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+  
