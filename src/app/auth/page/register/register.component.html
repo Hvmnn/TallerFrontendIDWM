@@ -88,7 +88,7 @@
             <option value="3">Prefiero no decirlo</option>
             <option value="4">Otro</option>
             <div
-                *ngIf="submitted && f['gender'].errors && registerForm.controls['required']"
+                *ngIf="submitted && f['gender'].errors"
                 class="error-message"
             >
                 El género es requerido.
