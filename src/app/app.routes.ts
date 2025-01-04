@@ -3,8 +3,10 @@ import { ProductListComponent } from './products/components/product-list/product
 import { ProductFormComponent } from './products/components/product-form/product-form.component';
 import { LoginComponent } from './auth/page/login/login.component';
 import { authGuard } from './auth/guards/auth.guard';
+import { RegisterComponent } from './auth/page/register/register.component';
 
 export const routes: Routes = [
+  { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'products', component: ProductListComponent },
