@@ -88,7 +88,7 @@
             <option value="3">Prefiero no decirlo</option>
             <option value="4">Otro</option>
             <div
-                *ngIf="submitted && f['gender'].errors?['required']"
+                *ngIf="submitted && f['gender'].errors && registerForm.controls['required']"
                 class="error-message"
             >
                 El género es requerido.
@@ -119,7 +119,7 @@
         >
 
         <div
-            *ngIf="submitted && registerForm.controls['password'].errors?.['required']"
+            *ngIf="submitted && registerForm.controls['confirmPassword'].errors?.['required']"
             class="error-message"    
         >
             La contraseña es requerida.
@@ -132,13 +132,6 @@
       <div *ngIf="registrationSuccess" class="success-message">
         <p>¡Te has registrado existosamente!</p>
         <button class="btnSucces" (click)="closeSuccessMessage()">Ok</button>
-      </div>
-
-      <div *ngIf="registrationError" class="error-register">
-        <p>{{registrationError}}</p>
-        <button class="btn-danger" (click)="closeErrorMessage()">
-            Aceptar
-        </button>
       </div>
     </div>
   </div>
