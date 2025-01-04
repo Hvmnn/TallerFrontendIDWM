@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Login } from '../interface/login';
 import { firstValueFrom } from 'rxjs';
+import { Register } from '../interface/register';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,22 @@ export class LoginService {
     } catch (error: any){
       let errorMessage = this.Errors(error);
       return Promise.reject({error:{message: errorMessage}});
+    }
+  }
+
+  async register(form: any): Promise<Register>{
+    try{
+      const data = await firstValueFrom(
+        this.http.post<Register>(`${this.url}/register`, form.value)
+      );
+      if(data && data.token){
+        await this.AuthService.setToken(data.token);
+      }
+      return data;
+    }
+    catch(error: any){
+      let errorMessage = this.Errors(error);
+      return Promise.reject({error: {message: errorMessage}});
     }
   }
 
