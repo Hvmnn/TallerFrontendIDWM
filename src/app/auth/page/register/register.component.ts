@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   submitted: boolean = false;
   errorMessages: string[] = [];
@@ -26,19 +26,16 @@ export class RegisterComponent {
 
    ngOnInit(): void{
     this.registerForm = this.formBuilder.group({
-      rut: ['', [Validators.required], rutValidator()],
+      rut: ['', [Validators.required]],
       name: ['', [Validators.required]],
       birthday: [
         '',
         [
-          Validators.required,
-          Validators.pattern(
-            '^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9]{2}$'
-          )
+          Validators.required
         ]
       ],
       email: ['', [Validators.required, Validators.email]],
-      GenderId: ['', [Validators.required]],
+      genderId: ['', [Validators.required]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     })
@@ -67,7 +64,7 @@ export class RegisterComponent {
           this.router.navigate(['']);
         }, 4000);
       } else {
-        this.registrationError = data.message;
+        this.registrationError="Error en el servidor";
       }
     } catch (err: any) {
       this.errorMessages.push('Ha ocurrido un error al crear la cuenta');
