@@ -1,15 +1,20 @@
 export interface Register {
-    message: string;
+    user:  User;
     token: string;
-    registerUser: RegisterUser;
 }
 
-export interface RegisterUser{
-    rut: string;
-    name: string;
+export interface User {
+    id:       number;
+    rut:      string;
+    name:     string;
     birthday: Date;
-    Email: string;
-    GenderId: number;
-    password: string;
-    confirmPassword: string;
+    email:    string;
+    isActive: boolean;
+    gender:   Gender;
+    role:     Gender;
+}
+
+export interface Gender {
+    id:   number;
+    type: string;
 }
