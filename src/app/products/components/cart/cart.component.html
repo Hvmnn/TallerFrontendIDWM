@@ -1,0 +1,44 @@
+<div>
+  <h1>Mi Carrito</h1>
+
+  <!-- Mostrar indicador de carga -->
+  <div *ngIf="isLoading">
+    <p>Cargando carrito...</p>
+  </div>
+
+  <!-- Mostrar mensaje si el carrito está vacío -->
+  <div *ngIf="!isLoading && cartItems.length === 0">
+    <p>Tu carrito está vacío. ¡Agrega productos para comenzar!</p>
+  </div>
+
+  <!-- Mostrar tabla con los productos del carrito -->
+  <table *ngIf="!isLoading && cartItems.length > 0">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cartItems">
+        <td>{{ item.productName }}</td>
+        <td>{{ item.productPrice | currency }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.total | currency }}</td>
+        <td>
+          <button (click)="increaseQuantity(item.productId)">+</button>
+          <button (click)="decreaseQuantity(item.productId)">-</button>
+          <button (click)="removeFromCart(item.productId)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Mostrar precio total -->
+  <div *ngIf="cartItems.length > 0">
+    <h3>Total: {{ totalPrice | currency }}</h3>
+  </div>
+</div>

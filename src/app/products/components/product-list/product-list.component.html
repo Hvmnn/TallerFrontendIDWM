@@ -29,11 +29,17 @@
         <td>{{ product.price | currency }}</td>
         <td>{{ product.stock }}</td>
         <td>
+          <!-- Acciones para administradores -->
           <button *ngIf="isAdmin()" (click)="editProduct(product.id)">
             Editar
           </button>
           <button *ngIf="isAdmin()" (click)="deleteProduct(product.id)">
             Eliminar
+          </button>
+
+          <!-- Botón para agregar al carrito, visible para todos -->
+          <button (click)="addToCart(product)">
+            Agregar al Carrito
           </button>
         </td>
       </tr>
