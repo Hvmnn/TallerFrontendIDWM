@@ -33,7 +33,8 @@
       (click)="filterByType(type)"
       [class.bg-blue-500]="selectedType === type"
       [class.text-white]="selectedType === type"
-      class="py-2 px-4 rounded border border-gray-300 text-gray-600 bg-white hover:bg-blue-100 hover:text-blue-600"
+      [class.text-gray-600]="selectedType !== type"
+      class="py-2 px-4 rounded border border-gray-300 bg-white hover:bg-blue-100 hover:text-blue-600"
     >
       {{ type }}
     </button>
@@ -75,6 +76,7 @@
       *ngFor="let page of pages"
       (click)="changePage(page)"
       [class.bg-blue-500]="currentPage === page"
+      [class.text-white]="currentPage === page"
       class="px-4 py-2 border rounded-lg hover:bg-blue-500 hover:text-white mx-1"
     >
       {{ page }}
