@@ -1,48 +1,83 @@
-<div>
-  <h1>Gestión de Productos</h1>
+<div class="container mx-auto p-6">
+  <!-- Header -->
+  <header class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Gestión de Productos</h1>
+    <div class="flex space-x-4">
+      <!-- Botón para crear producto -->
+      <button *ngIf="isAdmin()" (click)="createProduct()" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded shadow">
+        Crear Producto Nuevo
+      </button>
 
-  <!-- Botón para crear un nuevo producto, solo visible para administradores -->
-  <button *ngIf="isAdmin()" (click)="createProduct()">
-    Crear Producto Nuevo
-  </button>
+      <!-- Ícono del carrito -->
+      <button (click)="goToCart()" class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full shadow hover:bg-gray-200">
+        <img src="/src/assets/carrito-icon.png" alt="Carrito" class="w-8 h-8" />
+      </button>
+    </div>
+  </header>
 
-  <div *ngIf="products.length === 0">
+  <!-- Barra de búsqueda -->
+  <div class="mb-6">
+    <input
+      [(ngModel)]="searchQuery"
+      type="text"
+      placeholder="Buscar productos..."
+      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      (input)="filterProducts()"
+    />
+  </div>
+
+  <!-- Filtros -->
+  <div class="flex flex-wrap gap-4 mb-6">
+    <button
+      *ngFor="let type of allowedTypes"
+      (click)="filterByType(type)"
+      [class.bg-blue-500]="selectedType === type"
+      [class.text-white]="selectedType === type"
+      class="py-2 px-4 rounded border border-gray-300 text-gray-600 bg-white hover:bg-blue-100 hover:text-blue-600"
+    >
+      {{ type }}
+    </button>
+    <button (click)="sortProducts('asc')" [class.bg-blue-500]="orderBy === 'asc'" class="py-2 px-4 rounded border text-gray-600 bg-white hover:bg-blue-100 hover:text-blue-600">
+      Orden Ascendente
+    </button>
+    <button (click)="sortProducts('desc')" [class.bg-blue-500]="orderBy === 'desc'" class="py-2 px-4 rounded border text-gray-600 bg-white hover:bg-blue-100 hover:text-blue-600">
+      Orden Descendente
+    </button>
+  </div>
+
+  <!-- Lista de productos -->
+  <div *ngIf="products.length === 0" class="text-center text-gray-600">
     <p>No hay productos disponibles.</p>
   </div>
 
-  <table *ngIf="products.length > 0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Tipo</th>
-        <th>Precio</th>
-        <th>Stock</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{ product.id }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.type }}</td>
-        <td>{{ product.price | currency }}</td>
-        <td>{{ product.stock }}</td>
-        <td>
-          <!-- Acciones para administradores -->
-          <button *ngIf="isAdmin()" (click)="editProduct(product.id)">
-            Editar
-          </button>
-          <button *ngIf="isAdmin()" (click)="deleteProduct(product.id)">
-            Eliminar
-          </button>
+  <div *ngIf="products.length > 0">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div *ngFor="let product of filteredProducts" class="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition">
+        <img [src]="product.image || 'assets/placeholder.png'" alt="{{ product.name }}" class="w-full h-40 object-cover" />
+        <div class="p-4">
+          <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
+          <p class="text-gray-500">{{ product.type }}</p>
+          <p class="text-blue-500 font-bold mt-2">{{ product.price | currency: 'CLP':'symbol' }}</p>
+          <p class="text-gray-500 mt-1">Stock: {{ product.stock }}</p>
+          <div class="flex space-x-2 mt-4">
+            <button *ngIf="isAdmin()" (click)="editProduct(product.id)" class="bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 rounded">Editar</button>
+            <button *ngIf="isAdmin()" (click)="deleteProduct(product.id)" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Eliminar</button>
+            <button (click)="addToCart(product)" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <!-- Botón para agregar al carrito, visible para todos -->
-          <button (click)="addToCart(product)">
-            Agregar al Carrito
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Paginación -->
+  <div *ngIf="pages.length > 1" class="mt-6 flex justify-center">
+    <button
+      *ngFor="let page of pages"
+      (click)="changePage(page)"
+      [class.bg-blue-500]="currentPage === page"
+      class="px-4 py-2 border rounded-lg hover:bg-blue-500 hover:text-white mx-1"
+    >
+      {{ page }}
+    </button>
+  </div>
 </div>
