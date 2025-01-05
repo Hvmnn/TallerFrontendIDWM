@@ -32,6 +32,12 @@
     text-align: left;
 }
 
+#gender {
+  display: flex;
+  width: 100%;
+  border-radius: 5px;
+}
+
 .register input{
     width: 100%;
     padding: 10px;
