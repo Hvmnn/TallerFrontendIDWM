@@ -21,10 +21,11 @@ export class LoginService {
       );
       if (data && data.token){
         await this.AuthService.setToken(data.token);
+        await this.AuthService.setUser(String(data.user.id));
       }
       return data;
     } catch (error: any){
-      let errorMessage = this.Errors(error);
+      let errorMessage = this.handleError(error);
       return Promise.reject({error:{message: errorMessage}});
     }
   }
@@ -40,12 +41,12 @@ export class LoginService {
       return data;
     }
     catch(error: any){
-      let errorMessage = this.Errors(error);
+      let errorMessage = this.handleError(error);
       return Promise.reject({error: {message: errorMessage}});
     }
   }
 
-  private Errors(error: any): string{
+  private handleError(error: any): string{
     let errorMessage = "Error desconocido";
     if(error instanceof HttpErrorResponse){
       if(error.error instanceof ErrorEvent){
