@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   private tokenKey ="token";
+  private userId = "user";
 
   constructor(){}
 
@@ -25,6 +26,14 @@ export class AuthService {
     const token = this.getToken();
     return token !== null;
   }
+
+  getUser(): string | null {
+    return localStorage.getItem(this.userId);
+  }
+
+  setUser(user: string): void {
+    localStorage.setItem(this.userId, user);
+  } 
 
   logOut(): void{
     this.removeToken();
