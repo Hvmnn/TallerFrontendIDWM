@@ -1,4 +1,4 @@
-# Frontedn del Taller de Introducción al Desarrollo Web/Móvil
+# Frontend del Taller de Introducción al Desarrollo Web/Móvil
 
 ### Por Felipe Hamen e Ignacio Morales
 ****
