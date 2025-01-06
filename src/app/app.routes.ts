@@ -5,6 +5,7 @@ import { LoginComponent } from './auth/page/login/login.component';
 import { authGuard } from './auth/guards/auth.guard';
 import { RegisterComponent } from './auth/page/register/register.component';
 import { EditClientComponent } from './client/page/edit-client/edit-client.component';
+import { CartComponent } from './products/components/cart/cart.component';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent},
@@ -14,5 +15,6 @@ export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'products/new', component: ProductFormComponent, canActivate: [authGuard] },
   { path: 'products/:id', component: ProductFormComponent, canActivate: [authGuard] },
+  { path: 'cart', component: CartComponent },
   { path: '**', redirectTo: '/not-found' }
 ];
