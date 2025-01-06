@@ -1,0 +1,37 @@
+<div class="edit-client">
+    <h2>Editar cuenta</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <label for="name">Nombre</label>
+        <input
+            type="name"
+            id="name"
+            formControlName="name"
+            class="form-control"    
+        />
+
+        <label for="birthday">Fecha de nacimiento</label>
+        <input
+            type="birthday"
+            id="birthday"
+            formControlName="birthday"
+            class="form-control"
+        />
+
+        <label for="gender">Género</label>
+        <select
+            type="gender"
+            id="gender"
+            formControlName="genderId"
+            class="form-control"
+        >
+            <option value="" disabled selected>Selecciona tu género</option>
+            <option value="1">Masculino</option>
+            <option value="2">Femenino</option>
+            <option value="3">Prefiero no decirlo</option>
+            <option value="4">Otro</option>
+        </select>
+        
+        <button type="submit">Confirmar</button>
+        <button type="button">Cambiar contraseña</button>
+    </form>
+</div>

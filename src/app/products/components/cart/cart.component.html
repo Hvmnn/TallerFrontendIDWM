@@ -1,0 +1,63 @@
+<div class="container mx-auto p-6">
+  <!-- Header -->
+  <header class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Mi Carrito</h1>
+  </header>
+
+  <!-- Indicador de carga -->
+  <div *ngIf="isLoading" class="text-center text-gray-600">
+    <p>Cargando carrito...</p>
+  </div>
+
+  <!-- Mensaje de carrito vacío -->
+  <div *ngIf="!isLoading && cartItems.length === 0" class="text-center text-gray-600">
+    <p>Tu carrito está vacío. ¡Agrega productos para comenzar!</p>
+  </div>
+
+  <!-- Tabla de productos del carrito -->
+  <div *ngIf="!isLoading && cartItems.length > 0">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Card de producto -->
+      <div
+        *ngFor="let item of cartItems"
+        class="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition"
+      >
+        <div class="p-4">
+          <h3 class="text-lg font-semibold text-gray-800">{{ item.productName }}</h3>
+          <p class="text-gray-500">Precio: {{ item.productPrice | currency: 'CLP':'symbol' }}</p>
+          <p class="text-gray-500">Cantidad: {{ item.quantity }}</p>
+          <p class="text-blue-500 font-bold mt-2">Total: {{ item.total | currency: 'CLP':'symbol' }}</p>
+
+          <div class="flex space-x-2 mt-4">
+            <!-- Botones de acciones -->
+            <button
+              (click)="increaseQuantity(item.productId)"
+              class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+            >
+              +
+            </button>
+            <button
+              (click)="decreaseQuantity(item.productId)"
+              class="bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 rounded"
+            >
+              -
+            </button>
+            <button
+              (click)="removeFromCart(item.productId)"
+              class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+            >
+              Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mostrar precio total -->
+  <div *ngIf="cartItems.length > 0" class="mt-6 text-right">
+    <h3 class="text-xl font-bold text-gray-800">
+      Total: <span class="text-blue-500">{{ totalPrice | currency: 'CLP':'symbol' }}</span>
+    </h3>
+  </div>
+</div>
