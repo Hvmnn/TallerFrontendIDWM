@@ -1,6 +1,6 @@
 <div class="edit-client">
     <h2>Editar cuenta</h2>
-    <form>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
         <label for="name">Nombre</label>
         <input
             type="name"
@@ -21,7 +21,7 @@
         <select
             type="gender"
             id="gender"
-            formControlName="GenderId"
+            formControlName="genderId"
             class="form-control"
         >
             <option value="" disabled selected>Selecciona tu género</option>
